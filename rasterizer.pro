@@ -13,10 +13,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     rasterizerinterface.cpp \
-    vertex.cpp
+    rasterizer.cpp \
+    colorvertex.cpp
 
 HEADERS  += mainwindow.h \
     rasterizerinterface.h \
-    vertex.h
+    rasterizer.h \
+    colorvertex.h
 
 FORMS    += mainwindow.ui
