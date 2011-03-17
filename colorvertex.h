@@ -4,10 +4,11 @@
 #include <QVector3D>
 #include <QColor>
 
-class Vertex
+struct ColorVertex
 {
-public:
-	Vertex(QVector3D pos, QColor color);
+//public:
+	ColorVertex();
+	ColorVertex(QVector3D pos, QColor color);
 	QVector3D mPos;
 	QColor mColor;
 };
