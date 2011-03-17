@@ -13,6 +13,7 @@ public:
 	virtual QImage getColorBuffer() const;
 	virtual void setClearColor(QColor clearColor);
 	virtual void setPaintColor(QColor paintColor);
+	virtual void clear();
 
 protected:
 	QImage mColorBuffer;

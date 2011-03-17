@@ -21,3 +21,8 @@ void RasterizerInterface::setPaintColor(QColor paintColor)
 {
 	mPaintColor = paintColor;
 }
+
+void RasterizerInterface::clear()
+{
+	mColorBuffer.fill(mClearColor.rgba());
+}
