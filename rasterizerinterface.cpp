@@ -5,6 +5,7 @@ RasterizerInterface::RasterizerInterface(int width, int height) :
 {
 	setClearColor(Qt::black);
 	setPaintColor(Qt::white);
+	clear();
 }
 
 QImage RasterizerInterface::getColorBuffer() const

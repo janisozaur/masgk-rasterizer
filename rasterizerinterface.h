@@ -9,7 +9,7 @@ class RasterizerInterface
 {
 public:
 	RasterizerInterface(int width, int height);
-	virtual void triangle(QVector3D a, QVector3D b, QVector3D c) = 0;
+	virtual void vertex(QVector3D v) = 0;
 	virtual QImage getColorBuffer() const;
 	virtual void setClearColor(QColor clearColor);
 	virtual void setPaintColor(QColor paintColor);
