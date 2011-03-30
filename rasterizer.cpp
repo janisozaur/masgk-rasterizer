@@ -2,8 +2,8 @@
 
 #include "colorvertex.h"
 
-Rasterizer::Rasterizer(int width, int height) :
-	RasterizerInterface(width, height)
+Rasterizer::Rasterizer(int width, int height, QObject *parent) :
+	RasterizerInterface(width, height, parent)
 {
 	mTriangleVertices.reserve(3);
 }

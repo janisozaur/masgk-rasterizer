@@ -5,10 +5,11 @@
 #include <QImage>
 #include <QColor>
 
-class RasterizerInterface
+class RasterizerInterface : public QObject
 {
+	Q_OBJECT
 public:
-	RasterizerInterface(int width, int height);
+	explicit RasterizerInterface(int width, int height, QObject *parent = 0);
 	virtual void vertex(QVector3D v) = 0;
 	virtual QImage getColorBuffer() const;
 	virtual void setClearColor(QColor clearColor);
