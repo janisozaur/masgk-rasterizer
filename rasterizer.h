@@ -3,8 +3,6 @@
 
 #include "rasterizerinterface.h"
 
-class ColorVertex;
-
 class Rasterizer : public RasterizerInterface
 {
 public:
