@@ -21,6 +21,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	mEngine.globalObject().setProperty("QColor", mEngine.newFunction(QColor_ctor));
 	mEngine.globalObject().setProperty("QVector3D", mEngine.newFunction(QVector3D_ctor));
 
+	QAction* action = new QAction(ui->scriptTextEdit);
+	action->setAutoRepeat(false);
+	action->setShortcut(tr("Ctrl+Return"));
+	connect(action, SIGNAL(triggered()), ui->execPushButton, SLOT(click()));
+	ui->scriptTextEdit->addAction(action);
+
 	//ColorVertex c1(QVector3D(20, 120, 20), Qt::red);
 	//ColorVertex c2(QVector3D(130, 60, 20), Qt::green);
 	//ColorVertex c3(QVector3D(40, 20, 20), Qt::blue);
