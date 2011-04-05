@@ -44,9 +44,9 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 			qreal l1 = ((y2 - y3) * (x - x3) + (x3 - x2) * (y - y3)) / ((y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3));
 			qreal l2 = ((y3 - y1) * (x - x3) + (x1 - x3) * (y - y3)) / ((y3 - y1) * (x2 - x3) + (x1 - x3) * (y2 - y3));
 			qreal l3 = 1 - l1 - l2;
-			qreal d = a.mPos.z() * l1 + b.mPos.z() * l2 + c.mPos.z() * l3;
-			d = qBound(0.0, d, 255.0);
+			int d = a.mPos.z() * l1 + b.mPos.z() * l2 + c.mPos.z() * l3;
 			if ((mDepthBuffer.pixelIndex(x, y) > d) &&
+				(qBound(0, d, 255) == d) &&
 				(x1 - x2) * (y - y1) - (y1 - y2) * (x - x1) > 0 &&
 				(x2 - x3) * (y - y2) - (y2 - y3) * (x - x2) > 0 &&
 				(x3 - x1) * (y - y3) - (y3 - y1) * (x - x3) > 0)
