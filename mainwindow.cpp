@@ -44,6 +44,13 @@ void MainWindow::render()
 	ui->outputDisplayLabel->setPixmap(QPixmap::fromImage(result));
 }
 
+void MainWindow::renderDepth()
+{
+
+	QImage result = mRaster->getDepthBuffer();
+	ui->outputDisplayLabel->setPixmap(QPixmap::fromImage(result));
+}
+
 void MainWindow::executeScript()
 {
 	QScriptValue res = mEngine.evaluate(ui->scriptTextEdit->toPlainText());

@@ -20,6 +20,7 @@ public:
 
 public slots:
 	void render();
+	void renderDepth();
 	void executeScript();
 
 private:
