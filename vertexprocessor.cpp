@@ -53,3 +53,13 @@ void VertexProcessor::rotate(qreal angle, const QVector3D &v)
 {
 	mObj2world.rotate(angle, v);
 }
+
+void VertexProcessor::translate(qreal x, qreal y, qreal z)
+{
+	mObj2world.translate(x, y, z);
+}
+
+void VertexProcessor::translate(const QVector3D &v)
+{
+	mObj2world.translate(v);
+}

@@ -27,6 +27,8 @@ public slots:
 
 	void rotate(qreal angle, qreal x, qreal y, qreal z);
 	void rotate(qreal angle, const QVector3D &v);
+	void translate(qreal x, qreal y, qreal z);
+	void translate(const QVector3D &v);
 
 protected:
 	QMatrix4x4 mObj2world, mWorld2view, mView2projection;
