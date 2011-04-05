@@ -3,6 +3,7 @@
 #include "rasterizer.h"
 #include "qscriptctors.h"
 #include "colorvertex.h"
+#include "vertexprocessor.h"
 
 #include <QPixmap>
 
@@ -20,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	mEngine.globalObject().setProperty("mainWindow", mEngine.newQObject(this));
 	mEngine.globalObject().setProperty("QColor", mEngine.newFunction(QColor_ctor));
 	mEngine.globalObject().setProperty("QVector3D", mEngine.newFunction(QVector3D_ctor));
+	qScriptRegisterMetaType(&mEngine, vertexProcessorToScriptValue, vertexProcessorFromScriptValue);
+
+	mRaster->setVertexProcessor(new VertexProcessor(this));
 
 	QAction* action = new QAction(ui->scriptTextEdit);
 	action->setAutoRepeat(false);

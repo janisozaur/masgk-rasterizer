@@ -1,4 +1,5 @@
 #include "qscriptctors.h"
+#include "vertexprocessor.h"
 
 #include <QtGlobal>
 #include <QScriptEngine>
@@ -33,4 +34,14 @@ QScriptValue QVector3D_ctor(QScriptContext *context, QScriptEngine *engine)
 	vector.setY(context->argument(1).toNumber());
 	vector.setZ(context->argument(2).toNumber());
 	return engine->toScriptValue(vector);
+}
+
+QScriptValue vertexProcessorToScriptValue(QScriptEngine *engine, VertexProcessor *const &in)
+{
+	return engine->newQObject(in);
+}
+
+void vertexProcessorFromScriptValue(const QScriptValue &object, VertexProcessor *&out)
+{
+	out = qobject_cast<VertexProcessor*>(object.toQObject());
 }
