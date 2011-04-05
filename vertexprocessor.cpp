@@ -63,3 +63,25 @@ void VertexProcessor::translate(const QVector3D &v)
 {
 	mObj2world.translate(v);
 }
+
+void VertexProcessor::setPerspective(qreal angle, qreal aspect, qreal near,
+									 qreal far)
+{
+	mView2projection.perspective(angle, aspect, near, far);
+}
+
+void VertexProcessor::setLookAt(const QVector3D &eye, const QVector3D &center,
+								const QVector3D &up)
+{
+	mWorld2view.lookAt(eye, center, up);
+}
+
+void VertexProcessor::setIdentity()
+{
+	mObj2world = QMatrix4x4();
+}
+
+void VertexProcessor::reset()
+{
+	mObj2world = mView2projection = mWorld2view = QMatrix4x4();
+}

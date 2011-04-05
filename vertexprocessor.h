@@ -30,6 +30,11 @@ public slots:
 	void translate(qreal x, qreal y, qreal z);
 	void translate(const QVector3D &v);
 
+	void setPerspective(qreal angle, qreal aspect, qreal near, qreal far);
+	void setLookAt(const QVector3D &eye, const QVector3D &center, const QVector3D &up);
+	void setIdentity();
+	void reset();
+
 protected:
 	QMatrix4x4 mObj2world, mWorld2view, mView2projection;
 };
