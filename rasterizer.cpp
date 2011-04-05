@@ -1,6 +1,6 @@
 #include "rasterizer.h"
-
 #include "colorvertex.h"
+#include "vertexprocessor.h"
 
 Rasterizer::Rasterizer(int width, int height, QObject *parent) :
 	RasterizerInterface(width, height, parent)
@@ -10,7 +10,13 @@ Rasterizer::Rasterizer(int width, int height, QObject *parent) :
 
 void Rasterizer::vertex(QVector3D v)
 {
-	ColorVertex cv(v, mPaintColor);
+	QVector3D vertexPos;
+	if (mVP != NULL) {
+		vertexPos = mVP->transformVertex(v);
+	} else {
+		vertexPos = v;
+	}
+	ColorVertex cv(vertexPos, mPaintColor);
 	mTriangleVertices.append(cv);
 	if (mTriangleVertices.count() == 3) {
 		triangle(mTriangleVertices.at(0), mTriangleVertices.at(1), mTriangleVertices.at(2));

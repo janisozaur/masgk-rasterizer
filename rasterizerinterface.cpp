@@ -6,7 +6,8 @@
 RasterizerInterface::RasterizerInterface(int width, int height, QObject *parent) :
 	QObject(parent),
 	mColorBuffer(width, height, QImage::Format_ARGB32_Premultiplied),
-	mDepthBuffer(width, height, QImage::Format_Indexed8)
+	mDepthBuffer(width, height, QImage::Format_Indexed8),
+	mVP(NULL)
 {
 	setClearColor(Qt::black);
 	setPaintColor(Qt::white);
@@ -63,4 +64,14 @@ void RasterizerInterface::clearDepth()
 void RasterizerInterface::triangle(ColorVertex /*a*/, ColorVertex /*b*/, ColorVertex /*c*/)
 {
 	qDebug() << "This rasterizer does not support triangles";
+}
+
+void RasterizerInterface::setVertexProcessor(VertexProcessor *vp)
+{
+	mVP = vp;
+}
+
+VertexProcessor *RasterizerInterface::vertexProcessor() const
+{
+	return mVP;
 }

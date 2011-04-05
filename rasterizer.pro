@@ -15,12 +15,14 @@ SOURCES += main.cpp\
     rasterizerinterface.cpp \
     rasterizer.cpp \
     colorvertex.cpp \
-    qscriptctors.cpp
+    qscriptctors.cpp \
+    vertexprocessor.cpp
 
 HEADERS  += mainwindow.h \
     rasterizerinterface.h \
     rasterizer.h \
     colorvertex.h \
-    qscriptctors.h
+    qscriptctors.h \
+    vertexprocessor.h
 
 FORMS    += mainwindow.ui
