@@ -21,6 +21,7 @@ public:
 public slots:
 	void render();
 	void renderDepth();
+	void renderNormal();
 	void executeScript();
 
 private:

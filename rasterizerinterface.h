@@ -18,6 +18,7 @@ public:
 	explicit RasterizerInterface(int width, int height, QObject *parent = 0);
 	virtual QImage getDepthBuffer() const;
 	virtual QImage getColorBuffer() const;
+	virtual QImage getNormalBuffer() const;
 	virtual QColor clearColor() const;
 	virtual void setClearColor(const QColor &clearColor);
 	virtual QColor paintColor() const;
@@ -29,11 +30,15 @@ public:
 public slots:
 	virtual void clear();
 	virtual void clearDepth();
+	virtual void clearNormal();
 	virtual void vertex(QVector3D v) = 0;
+	virtual void normal(QVector3D n) = 0;
+	virtual void setLightPosition(const QVector3D &lightPos) = 0;
 
 protected:
-	QImage mColorBuffer, mDepthBuffer;
+	QImage mColorBuffer, mDepthBuffer, mNormalBuffer;
 	QColor mClearColor, mPaintColor;
+	QVector3D mNormal, mLightPos;
 	VertexProcessor *mVP;
 };
 

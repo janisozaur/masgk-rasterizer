@@ -8,8 +8,8 @@ struct ColorVertex
 {
 //public:
 	ColorVertex();
-	ColorVertex(QVector3D pos, QColor color);
-	QVector3D mPos;
+	ColorVertex(QVector3D pos, QVector3D normal, QColor color);
+	QVector3D mPos, mNormal;
 	QColor mColor;
 };
 

@@ -50,8 +50,13 @@ void MainWindow::render()
 
 void MainWindow::renderDepth()
 {
-
 	QImage result = mRaster->getDepthBuffer();
+	ui->outputDisplayLabel->setPixmap(QPixmap::fromImage(result));
+}
+
+void MainWindow::renderNormal()
+{
+	QImage result = mRaster->getNormalBuffer();
 	ui->outputDisplayLabel->setPixmap(QPixmap::fromImage(result));
 }
 

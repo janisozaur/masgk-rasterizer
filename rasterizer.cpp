@@ -10,13 +10,15 @@ Rasterizer::Rasterizer(int width, int height, QObject *parent) :
 
 void Rasterizer::vertex(QVector3D v)
 {
-	QVector3D vertexPos;
+	QVector3D vertexPos, normal;
 	if (mVP != NULL) {
 		vertexPos = mVP->transformVertex(v);
+		normal = mVP->transformNormal(mNormal);
 	} else {
+		normal = mNormal;
 		vertexPos = v;
 	}
-	ColorVertex cv(vertexPos, mPaintColor);
+	ColorVertex cv(vertexPos, normal, mPaintColor);
 	mTriangleVertices.append(cv);
 	if (mTriangleVertices.count() == 3) {
 		triangle(mTriangleVertices.at(0), mTriangleVertices.at(1), mTriangleVertices.at(2));
@@ -33,6 +35,10 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 	const float x1 = a.mPos.x();
 	const float x2 = b.mPos.x();
 	const float x3 = c.mPos.x();
+
+	const QVector3D na = a.mNormal.normalized();
+	const QVector3D nb = b.mNormal.normalized();
+	const QVector3D nc = c.mNormal.normalized();
 
 	const int minx = qMax((int)(qMin(x1, qMin(x2, x3))), 0);
 	const int maxx = qMin((int)(qMax(x1, qMax(x2, x3))), mColorBuffer.width());
@@ -51,12 +57,25 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 				(x2 - x3) * (y - y2) - (y2 - y3) * (x - x2) > 0 &&
 				(x3 - x1) * (y - y3) - (y3 - y1) * (x - x3) > 0)
 			{
+				QVector3D n = na * l1 + nb * l2 + nc * l3;
+				n.normalize();
 				int red = l1 * a.mColor.red() + l2 * b.mColor.red() + l3 * c.mColor.red();
 				int green = l1 * a.mColor.green() + l2 * b.mColor.green() + l3 * c.mColor.green();
 				int blue = l1 * a.mColor.blue() + l2 * b.mColor.blue() + l3 * c.mColor.blue();
 				mColorBuffer.setPixel(x, y, QColor(red, green, blue).rgb());
 				mDepthBuffer.setPixel(x, y, (int)d);
+				mNormalBuffer.setPixel(x, y, qRgb(n.x() * 255, n.y() * 255, n.z() * 255));
 			}
 		}
 	}
+}
+
+void Rasterizer::normal(QVector3D n)
+{
+	mNormal = n.normalized();
+}
+
+void Rasterizer::setLightPosition(const QVector3D &l)
+{
+	mLightPos = l;
 }
