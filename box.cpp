@@ -17,9 +17,9 @@ Box::~Box()
 
 void Box::render()
 {
-	mRasterizer->normal(QVector3D(0, 0, 1));
 
 	// front
+	mRasterizer->normal(QVector3D(0, 0, 1));
 	mRasterizer->vertex(QVector3D(-1, 1, 1) * mScale);
 	mRasterizer->vertex(QVector3D(1, 1, 1) * mScale);
 	mRasterizer->vertex(QVector3D(-1, -1, 1) * mScale);
@@ -29,6 +29,7 @@ void Box::render()
 	mRasterizer->vertex(QVector3D(1, -1, 1) * mScale);
 
 	// left
+	mRasterizer->normal(QVector3D(-1, 0, 0));
 	mRasterizer->vertex(QVector3D(-1, 1, -1) * mScale);
 	mRasterizer->vertex(QVector3D(-1, 1, 1) * mScale);
 	mRasterizer->vertex(QVector3D(-1, -1, -1) * mScale);
@@ -38,6 +39,7 @@ void Box::render()
 	mRasterizer->vertex(QVector3D(-1, -1, 1) * mScale);
 
 	// back
+	mRasterizer->normal(QVector3D(0, 0, -1));
 	mRasterizer->vertex(QVector3D(1, 1, -1) * mScale);
 	mRasterizer->vertex(QVector3D(-1, 1, -1) * mScale);
 	mRasterizer->vertex(QVector3D(1, -1, -1) * mScale);
@@ -47,6 +49,7 @@ void Box::render()
 	mRasterizer->vertex(QVector3D(-1, -1, -1) * mScale);
 
 	// right
+	mRasterizer->normal(QVector3D(1, 0, 0));
 	mRasterizer->vertex(QVector3D(1, 1, 1) * mScale);
 	mRasterizer->vertex(QVector3D(1, 1, -1) * mScale);
 	mRasterizer->vertex(QVector3D(1, -1, 1) * mScale);
@@ -56,15 +59,17 @@ void Box::render()
 	mRasterizer->vertex(QVector3D(1, -1, -1) * mScale);
 
 	// top
+	mRasterizer->normal(QVector3D(0, 1, 0));
 	mRasterizer->vertex(QVector3D(-1, 1, -1) * mScale);
-	mRasterizer->vertex(QVector3D(-1, 1, -1) * mScale);
+	mRasterizer->vertex(QVector3D(1, 1, -1) * mScale);
 	mRasterizer->vertex(QVector3D(-1, 1, 1) * mScale);
 
 	mRasterizer->vertex(QVector3D(-1, 1, 1) * mScale);
-	mRasterizer->vertex(QVector3D(-1, 1, -1) * mScale);
+	mRasterizer->vertex(QVector3D(1, 1, -1) * mScale);
 	mRasterizer->vertex(QVector3D(1, 1, 1) * mScale);
 
 	// bottom
+	mRasterizer->normal(QVector3D(0, -1, 0));
 	mRasterizer->vertex(QVector3D(-1, -1, 1) * mScale);
 	mRasterizer->vertex(QVector3D(1, -1, 1) * mScale);
 	mRasterizer->vertex(QVector3D(-1, -1, -1) * mScale);
