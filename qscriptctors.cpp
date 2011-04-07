@@ -1,5 +1,7 @@
 #include "qscriptctors.h"
 #include "vertexprocessor.h"
+#include "box.h"
+#include "rasterizerinterface.h"
 
 #include <QtGlobal>
 #include <QScriptEngine>
@@ -36,6 +38,19 @@ QScriptValue QVector3D_ctor(QScriptContext *context, QScriptEngine *engine)
 	return engine->toScriptValue(vector);
 }
 
+QScriptValue Box_ctor(QScriptContext *context, QScriptEngine *engine)
+{
+	Box *box;
+	if (context->argumentCount() != 1) {
+		context->throwError(QScriptContext::SyntaxError, "Box constructor takes 1 parameter: RasterizerInterface *");
+	}
+	if (qobject_cast<RasterizerInterface *>(context->argument(0).toQObject()) == NULL) {
+		context->throwError(QScriptContext::SyntaxError, "Invalid parameter");
+	}
+	box = new Box(qobject_cast<RasterizerInterface *>(context->argument(0).toQObject()));
+	return engine->toScriptValue(box);
+}
+
 QScriptValue vertexProcessorToScriptValue(QScriptEngine *engine, VertexProcessor *const &in)
 {
 	return engine->newQObject(in);
@@ -44,4 +59,14 @@ QScriptValue vertexProcessorToScriptValue(QScriptEngine *engine, VertexProcessor
 void vertexProcessorFromScriptValue(const QScriptValue &object, VertexProcessor *&out)
 {
 	out = qobject_cast<VertexProcessor*>(object.toQObject());
+}
+
+QScriptValue boxToScriptValue(QScriptEngine *engine, Box *const &in)
+{
+	return engine->newQObject(in);
+}
+
+void boxFromScriptValue(const QScriptValue &object, Box *&out)
+{
+	out = qobject_cast<Box*>(object.toQObject());
 }
