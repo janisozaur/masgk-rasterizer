@@ -8,9 +8,9 @@
 class VertexProcessor : public QObject
 {
 	Q_OBJECT
-	Q_PROPERTY(QMatrix4x4 mObj2world READ obj2worldMatrix WRITE setObj2worldMatrix)
-	Q_PROPERTY(QMatrix4x4 mWorld2view READ world2viewMatrix WRITE setWorld2viewMatrix)
-	Q_PROPERTY(QMatrix4x4 mView2projection READ view2projectionMatrix WRITE setView2projectionMatrix)
+	Q_PROPERTY(QMatrix4x4 obj2world READ obj2worldMatrix WRITE setObj2worldMatrix)
+	Q_PROPERTY(QMatrix4x4 world2view READ world2viewMatrix WRITE setWorld2viewMatrix)
+	Q_PROPERTY(QMatrix4x4 view2projection READ view2projectionMatrix WRITE setView2projectionMatrix)
 public:
 	explicit VertexProcessor(QObject *parent = 0);
 

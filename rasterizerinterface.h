@@ -11,9 +11,9 @@ class VertexProcessor;
 class RasterizerInterface : public QObject
 {
 	Q_OBJECT
-	Q_PROPERTY(QColor mPaintColor READ paintColor WRITE setPaintColor)
-	Q_PROPERTY(QColor mClearColor READ clearColor WRITE setClearColor)
-	Q_PROPERTY(VertexProcessor *mVP READ vertexProcessor WRITE setVertexProcessor)
+	Q_PROPERTY(QColor paintColor READ paintColor WRITE setPaintColor)
+	Q_PROPERTY(QColor clearColor READ clearColor WRITE setClearColor)
+	Q_PROPERTY(VertexProcessor *vp READ vertexProcessor WRITE setVertexProcessor)
 public:
 	explicit RasterizerInterface(int width, int height, QObject *parent = 0);
 	virtual QImage getDepthBuffer() const;
