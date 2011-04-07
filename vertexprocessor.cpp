@@ -98,3 +98,8 @@ QVector3D VertexProcessor::transformNormal(const QVector3D &normal) const
 	QVector4D result = normalMatrix() * normal;
 	return normal;
 }
+
+QVector3D VertexProcessor::transformLight(const QVector3D &light) const
+{
+	return QVector3D(mWorld2view * QVector4D(light, 1.0));
+}
