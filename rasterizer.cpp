@@ -39,6 +39,23 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 	const QVector3D na = a.mNormal.normalized();
 	const QVector3D nb = b.mNormal.normalized();
 	const QVector3D nc = c.mNormal.normalized();
+	const QVector3D l = (mVP == NULL) ? mLightPos : mVP->transformLight(mLightPos);
+	const QVector3D nl = l.normalized();
+
+	QVector3D ca = QVector3D(a.mColor.redF(), a.mColor.greenF(), a.mColor.blueF());
+	QVector3D cb = QVector3D(b.mColor.redF(), b.mColor.greenF(), b.mColor.blueF());
+	QVector3D cc = QVector3D(c.mColor.redF(), c.mColor.greenF(), c.mColor.blueF());
+
+	const qreal ambient = 0.2;
+	const qreal diffuse = 0.5;
+
+	QVector3D da = ca * QVector3D::dotProduct(nl, na) * diffuse;
+	QVector3D db = cb * QVector3D::dotProduct(nl, nb) * diffuse;
+	QVector3D dc = cc * QVector3D::dotProduct(nl, nc) * diffuse;
+
+	QVector3D aa = ca * ambient;
+	QVector3D ab = cb * ambient;
+	QVector3D ac = cc * ambient;
 
 	const int minx = qMax((int)(qMin(x1, qMin(x2, x3))), 0);
 	const int maxx = qMin((int)(qMax(x1, qMax(x2, x3))), mColorBuffer.width());
