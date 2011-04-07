@@ -6,18 +6,12 @@
 RasterizerInterface::RasterizerInterface(int width, int height, QObject *parent) :
 	QObject(parent),
 	mColorBuffer(width, height, QImage::Format_ARGB32_Premultiplied),
-	mDepthBuffer(width, height, QImage::Format_Indexed8),
 	mNormalBuffer(width, height, QImage::Format_RGB32),
+	mDepthBuffer(width * height, 255.0),
 	mVP(NULL)
 {
 	setClearColor(Qt::black);
 	setPaintColor(Qt::white);
-	QVector<QRgb> colorTable;
-	colorTable.reserve(256);
-	for (int i = 0; i < 256; i++) {
-		colorTable << qRgb(i, i, i);
-	}
-	mDepthBuffer.setColorTable(colorTable);
 	clear();
 	clearDepth();
 }
@@ -29,7 +23,16 @@ QImage RasterizerInterface::getColorBuffer() const
 
 QImage RasterizerInterface::getDepthBuffer() const
 {
-	return mDepthBuffer;
+	QImage result(mColorBuffer.size(), QImage::Format_RGB32);
+	for (int y = 0; y < mColorBuffer.height(); y++) {
+		for (int x = 0; x < mColorBuffer.width(); x++) {
+			//qreal val = qBound(0.0, mDepthBuffer.at(y * mColorBuffer.width() + x), 1.0);
+			qreal val = mDepthBuffer.at(y * mColorBuffer.width() + x);
+			QRgb color = qRgb(val, val, val);
+			result.setPixel(x, y, color);
+		}
+	}
+	return result;
 }
 
 QImage RasterizerInterface::getNormalBuffer() const
@@ -64,7 +67,7 @@ void RasterizerInterface::clear()
 
 void RasterizerInterface::clearDepth()
 {
-	mDepthBuffer.fill(255);
+	mDepthBuffer.fill(255.0);
 }
 
 void RasterizerInterface::clearNormal()

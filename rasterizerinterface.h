@@ -36,7 +36,8 @@ public slots:
 	virtual void setLightPosition(const QVector3D &lightPos) = 0;
 
 protected:
-	QImage mColorBuffer, mDepthBuffer, mNormalBuffer;
+	QImage mColorBuffer, mNormalBuffer;
+	QVector<qreal> mDepthBuffer;
 	QColor mClearColor, mPaintColor;
 	QVector3D mNormal, mLightPos;
 	VertexProcessor *mVP;
