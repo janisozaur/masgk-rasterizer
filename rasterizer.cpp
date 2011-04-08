@@ -81,9 +81,9 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 			int idx = pos.y() * mColorBuffer.width() + pos.x();
 			if ((mDepthBuffer.at(idx) > d) &&
 				//(qBound(0, d, 255) == d) &&
-				(x1 - x2) * (y - y1) - (y1 - y2) * (x - x1) > 0 &&
-				(x2 - x3) * (y - y2) - (y2 - y3) * (x - x2) > 0 &&
-				(x3 - x1) * (y - y3) - (y3 - y1) * (x - x3) > 0)
+				(x1 - x2) * (y - y1) - (y1 - y2) * (x - x1) >= 0 &&
+				(x2 - x3) * (y - y2) - (y2 - y3) * (x - x2) >= 0 &&
+				(x3 - x1) * (y - y3) - (y3 - y1) * (x - x3) >= 0)
 			{
 				QVector3D n = na * l1 + nb * l2 + nc * l3;
 				n.normalize();
