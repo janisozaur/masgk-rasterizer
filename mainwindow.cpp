@@ -28,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	mRaster->setVertexProcessor(new VertexProcessor(this));
 
 	QAction* action = new QAction(ui->scriptTextEdit);
-	action->setAutoRepeat(false);
 	action->setShortcut(tr("Ctrl+Return"));
 	connect(action, SIGNAL(triggered()), ui->execPushButton, SLOT(click()));
 	ui->scriptTextEdit->addAction(action);
