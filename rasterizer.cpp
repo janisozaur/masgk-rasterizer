@@ -28,13 +28,13 @@ void Rasterizer::vertex(QVector3D v)
 
 void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 {
-	const float y1 = a.mPos.y();
-	const float y2 = b.mPos.y();
-	const float y3 = c.mPos.y();
+	const float y1 = (a.mPos.y() + 1) * mColorBuffer.height() / 2;
+	const float y2 = (b.mPos.y() + 1) * mColorBuffer.height() / 2;
+	const float y3 = (c.mPos.y() + 1) * mColorBuffer.height() / 2;
 
-	const float x1 = a.mPos.x();
-	const float x2 = b.mPos.x();
-	const float x3 = c.mPos.x();
+	const float x1 = (a.mPos.x() + 1) * mColorBuffer.width() / 2;
+	const float x2 = (b.mPos.x() + 1) * mColorBuffer.width() / 2;
+	const float x3 = (c.mPos.x() + 1) * mColorBuffer.width() / 2;
 
 	const QVector3D na = a.mNormal.normalized();
 	const QVector3D nb = b.mNormal.normalized();
