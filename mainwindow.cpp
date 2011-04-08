@@ -74,3 +74,11 @@ void MainWindow::executeScript()
 				 << " in line" << mEngine.uncaughtExceptionLineNumber();
 	}
 }
+
+void MainWindow::on_savePushButton_clicked()
+{
+	const QPixmap *p = ui->outputDisplayLabel->pixmap();
+	if (p != NULL) {
+		p->save("out.png");
+	}
+}

@@ -24,6 +24,9 @@ public slots:
 	void renderNormal();
 	void executeScript();
 
+private slots:
+	void on_savePushButton_clicked();
+
 private:
 	Ui::MainWindow *ui;
 	RasterizerInterface *mRaster;
