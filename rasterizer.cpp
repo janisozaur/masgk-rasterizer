@@ -10,15 +10,17 @@ Rasterizer::Rasterizer(int width, int height, QObject *parent) :
 
 void Rasterizer::vertex(QVector3D v)
 {
-	QVector3D vertexPos, normal;
+	QVector3D vertexPos, vertexViewPos, normal;
 	if (mVP != NULL) {
 		vertexPos = mVP->transformVertex(v);
 		normal = mVP->transformNormal(mNormal);
+		vertexViewPos = mVP->transformToView(v);
 	} else {
 		normal = mNormal;
 		vertexPos = v;
+		vertexViewPos = v;
 	}
-	ColorVertex cv(vertexPos, normal, mPaintColor);
+	ColorVertex cv(vertexPos, vertexViewPos, normal, mPaintColor);
 	mTriangleVertices.append(cv);
 	if (mTriangleVertices.count() == 3) {
 		triangle(mTriangleVertices.at(0), mTriangleVertices.at(1), mTriangleVertices.at(2));
@@ -40,7 +42,6 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 	const QVector3D nb = b.mNormal.normalized();
 	const QVector3D nc = c.mNormal.normalized();
 	const QVector3D l = (mVP == NULL) ? mLightPos : mVP->transformLight(mLightPos);
-	const QVector3D nl = l.normalized();
 
 	QVector3D ca = QVector3D(a.mColor.redF(), a.mColor.greenF(), a.mColor.blueF());
 	QVector3D cb = QVector3D(b.mColor.redF(), b.mColor.greenF(), b.mColor.blueF());
@@ -49,9 +50,17 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 	const qreal ambient = 0.2;
 	const qreal diffuse = 0.5;
 
-	QVector3D da = ca * QVector3D::dotProduct(nl, na) * diffuse;
-	QVector3D db = cb * QVector3D::dotProduct(nl, nb) * diffuse;
-	QVector3D dc = cc * QVector3D::dotProduct(nl, nc) * diffuse;
+	QVector3D nl = -a.mViewPos + l;
+	nl.normalize();
+	QVector3D da = ca * qMax(QVector3D::dotProduct(nl, na), 0.0) * diffuse;
+
+	nl = -b.mViewPos + l;
+	nl.normalize();
+	QVector3D db = cb * qMax(QVector3D::dotProduct(nl, nb), 0.0) * diffuse;
+
+	nl = -c.mViewPos + l;
+	nl.normalize();
+	QVector3D dc = cc * qMax(QVector3D::dotProduct(nl, nc), 0.0) * diffuse;
 
 	QVector3D aa = ca * ambient;
 	QVector3D ab = cb * ambient;

@@ -20,6 +20,7 @@ public slots:
 	QVector3D transformVertex(const QVector3D &vertex) const;
 	QVector3D transformNormal(const QVector3D &normal) const;
 	QVector3D transformLight(const QVector3D &light) const;
+	QVector3D transformToView(const QVector3D &vertex) const;
 	QMatrix4x4 obj2worldMatrix() const;
 	void setObj2worldMatrix(const QMatrix4x4 &matrix);
 	QMatrix4x4 world2viewMatrix() const;

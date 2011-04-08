@@ -102,3 +102,10 @@ QVector3D VertexProcessor::transformLight(const QVector3D &light) const
 {
 	return QVector3D(mWorld2view * QVector4D(light, 1.0));
 }
+
+QVector3D VertexProcessor::transformToView(const QVector3D &vertex) const
+{
+	QMatrix4x4 mv = (mWorld2view * mObj2world);
+	QVector4D result = mv * QVector4D(vertex, 1.0);
+	return QVector3D(result);
+}
