@@ -96,7 +96,7 @@ QVector3D VertexProcessor::transformNormal(const QVector3D &normal) const
 {
 	//QVector4D result = QVector4D(vertex, 1.0) * mObj2world * mWorld2view * mView2projection;
 	QVector4D result = normalMatrix() * normal;
-	return normal;
+	return QVector3D(result);
 }
 
 QVector3D VertexProcessor::transformLight(const QVector3D &light) const
