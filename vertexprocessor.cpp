@@ -9,7 +9,8 @@ VertexProcessor::VertexProcessor(QObject *parent) :
 
 QVector3D VertexProcessor::transformVertex(const QVector3D &vertex) const
 {
-	QVector4D result = mView2projection * mWorld2view * mObj2world * QVector4D(vertex, 1.0);
+	QMatrix4x4 mvp = mView2projection * (mWorld2view * mObj2world);
+	QVector4D result = mvp * QVector4D(vertex, 1.0);
 	qreal w = result.w();
 	return QVector3D(result.x() / w, result.y() / w, result.z() / w);
 }
