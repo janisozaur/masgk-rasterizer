@@ -2,9 +2,11 @@
 #define RASTERIZER_H
 
 #include "rasterizerinterface.h"
+#include "colorvertex.h"
 
 class Rasterizer : public RasterizerInterface
 {
+	Q_OBJECT
 public:
 	explicit Rasterizer(int width, int height, QObject *parent = 0);
 	void triangle(ColorVertex a, ColorVertex b, ColorVertex c);
