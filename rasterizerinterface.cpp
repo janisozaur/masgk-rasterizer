@@ -8,7 +8,8 @@ RasterizerInterface::RasterizerInterface(int width, int height, QObject *parent)
 	mColorBuffer(width, height, QImage::Format_ARGB32_Premultiplied),
 	mNormalBuffer(width, height, QImage::Format_RGB32),
 	mDepthBuffer(width * height, 255.0),
-	mVP(NULL)
+	mVP(NULL),
+	mNormalize(true)
 {
 	setClearColor(Qt::black);
 	setPaintColor(Qt::white);
