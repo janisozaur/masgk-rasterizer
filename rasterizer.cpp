@@ -86,7 +86,7 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 		for (int x = minx; x < maxx; x++) {
 			QPoint pos(x, mColorBuffer.height() - y - 1);
 			int idx = pos.y() * mColorBuffer.width() + pos.x();
-			if  ((x1 - x2) * (y - y1) - (y1 - y2) * (x - x1) >= 0 &&
+			if ((x1 - x2) * (y - y1) - (y1 - y2) * (x - x1) >= 0 &&
 				(x2 - x3) * (y - y2) - (y2 - y3) * (x - x2) >= 0 &&
 				(x3 - x1) * (y - y3) - (y3 - y1) * (x - x3) >= 0)
 			{
@@ -97,9 +97,6 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 				if (mDepthBuffer.at(idx) > d) {
 					QVector3D n = na * l1 + nb * l2 + nc * l3;
 					n.normalize();
-					//int red = l1 * a.mColor.red() + l2 * b.mColor.red() + l3 * c.mColor.red();
-					//int green = l1 * a.mColor.green() + l2 * b.mColor.green() + l3 * c.mColor.green();
-					//int blue = l1 * a.mColor.blue() + l2 * b.mColor.blue() + l3 * c.mColor.blue();
 					QVector3D color = ((da + aa + sa) * l1 + (db + ab + sb) * l2 + (dc + ac + sc) * l3) * 255;
 					color.setX(qBound(0.0, color.x(), 255.0));
 					color.setY(qBound(0.0, color.y(), 255.0));
