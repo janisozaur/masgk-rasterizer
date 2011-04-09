@@ -14,6 +14,7 @@ class RasterizerInterface : public QObject
 	Q_PROPERTY(QColor paintColor READ paintColor WRITE setPaintColor)
 	Q_PROPERTY(QColor clearColor READ clearColor WRITE setClearColor)
 	Q_PROPERTY(VertexProcessor *vp READ vertexProcessor WRITE setVertexProcessor)
+	Q_PROPERTY(bool normalize READ normalize WRITE enableNormalization)
 public:
 	explicit RasterizerInterface(int width, int height, QObject *parent = 0);
 	virtual QImage getDepthBuffer() const;
@@ -26,6 +27,8 @@ public:
 	virtual void triangle(ColorVertex a, ColorVertex b, ColorVertex c);
 	virtual void setVertexProcessor(VertexProcessor *vp);
 	virtual VertexProcessor *vertexProcessor() const;
+	bool normalize() const;
+	void enableNormalization(bool enable);
 
 public slots:
 	virtual void clear();
@@ -41,6 +44,7 @@ protected:
 	QColor mClearColor, mPaintColor;
 	QVector3D mNormal, mLightPos;
 	VertexProcessor *mVP;
+	bool mNormalize;
 };
 
 #endif // RASTERIZERINTERFACE_H

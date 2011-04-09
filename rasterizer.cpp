@@ -40,9 +40,9 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 	const float x2 = (b.mPos.x() + 1) * mColorBuffer.width() / 2;
 	const float x3 = (c.mPos.x() + 1) * mColorBuffer.width() / 2;
 
-	const QVector3D na = a.mNormal.normalized();
-	const QVector3D nb = b.mNormal.normalized();
-	const QVector3D nc = c.mNormal.normalized();
+	const QVector3D na = mNormalize ? a.mNormal.normalized() : a.mNormal;
+	const QVector3D nb = mNormalize ? b.mNormal.normalized() : b.mNormal;
+	const QVector3D nc = mNormalize ? c.mNormal.normalized() : c.mNormal;
 	const QVector3D l = (mVP == NULL) ? mLightPos : mVP->transformLight(mLightPos);
 	const QVector3D nl = l.normalized();
 

@@ -17,6 +17,8 @@ Box::~Box()
 
 void Box::render()
 {
+	bool restore = mRasterizer->normalize();
+	mRasterizer->enableNormalization(false);
 
 	// front
 	mRasterizer->normal(QVector3D(0, 0, 1));
@@ -77,6 +79,8 @@ void Box::render()
 	mRasterizer->vertex(QVector3D(-1, -1, -1) * mScale);
 	mRasterizer->vertex(QVector3D(1, -1, 1) * mScale);
 	mRasterizer->vertex(QVector3D(1, -1, -1) * mScale);
+
+	mRasterizer->enableNormalization(restore);
 }
 
 void Box::scale(qreal s)

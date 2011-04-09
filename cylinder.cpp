@@ -107,10 +107,15 @@ Cylinder::Cylinder(int segments, RasterizerInterface *rasterizer) :
 
 void Cylinder::render()
 {
+	bool restore = mRasterizer->normalize();
+	mRasterizer->enableNormalization(false);
+
 	for (int i = 0; i < mVertices.count(); i++) {
 		mRasterizer->normal(mNormals.at(i));
 		mRasterizer->vertex(mVertices.at(i) * mScale);
 	}
+
+	mRasterizer->enableNormalization(restore);
 }
 
 void Cylinder::scale(qreal s)

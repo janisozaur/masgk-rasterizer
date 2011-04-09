@@ -89,3 +89,13 @@ VertexProcessor *RasterizerInterface::vertexProcessor() const
 {
 	return mVP;
 }
+
+bool RasterizerInterface::normalize() const
+{
+	return mNormalize;
+}
+
+void RasterizerInterface::enableNormalization(bool enable)
+{
+	mNormalize = enable;
+}

@@ -66,10 +66,15 @@ Sphere::Sphere(int horizontal, int vertical, RasterizerInterface *rasterizer) :
 
 void Sphere::render()
 {
+	bool restore = mRasterizer->normalize();
+	mRasterizer->enableNormalization(false);
+
 	for (int i = 0; i < mVertices.count(); i++) {
 		mRasterizer->normal(mVertices.at(i));
 		mRasterizer->vertex(mVertices.at(i) * mScale);
 	}
+
+	mRasterizer->enableNormalization(restore);
 }
 
 void Sphere::scale(qreal s)
