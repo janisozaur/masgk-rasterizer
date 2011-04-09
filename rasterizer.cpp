@@ -2,6 +2,8 @@
 #include "colorvertex.h"
 #include "vertexprocessor.h"
 
+#include <cmath>
+
 Rasterizer::Rasterizer(int width, int height, QObject *parent) :
 	RasterizerInterface(width, height, parent)
 {
@@ -42,6 +44,7 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 	const QVector3D nb = b.mNormal.normalized();
 	const QVector3D nc = c.mNormal.normalized();
 	const QVector3D l = (mVP == NULL) ? mLightPos : mVP->transformLight(mLightPos);
+	const QVector3D nl = l.normalized();
 
 	QVector3D ca = QVector3D(a.mColor.redF(), a.mColor.greenF(), a.mColor.blueF());
 	QVector3D cb = QVector3D(b.mColor.redF(), b.mColor.greenF(), b.mColor.blueF());
@@ -49,18 +52,26 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 
 	const qreal ambient = 0.2;
 	const qreal diffuse = 0.5;
+	const int specularPower = 25;
 
-	QVector3D nl = -a.mViewPos + l;
-	nl.normalize();
-	QVector3D da = ca * qMax(QVector3D::dotProduct(nl, na), 0.0) * diffuse;
+	QVector3D ra = 2 * QVector3D::dotProduct(nl, na) * na - nl;
+	QVector3D rb = 2 * QVector3D::dotProduct(nl, nb) * nb - nl;
+	QVector3D rc = 2 * QVector3D::dotProduct(nl, nc) * nc - nl;
 
-	nl = -b.mViewPos + l;
-	nl.normalize();
-	QVector3D db = cb * qMax(QVector3D::dotProduct(nl, nb), 0.0) * diffuse;
+	QVector3D pl = -a.mViewPos + l;
+	pl.normalize();
+	QVector3D da = ca * qMax(QVector3D::dotProduct(pl, na), 0.0) * diffuse;
+	QVector3D sa = ca * pow(qMax(QVector3D::dotProduct(ra, pl), 0.0), specularPower);
 
-	nl = -c.mViewPos + l;
-	nl.normalize();
-	QVector3D dc = cc * qMax(QVector3D::dotProduct(nl, nc), 0.0) * diffuse;
+	pl = -b.mViewPos + l;
+	pl.normalize();
+	QVector3D db = cb * qMax(QVector3D::dotProduct(pl, nb), 0.0) * diffuse;
+	QVector3D sb = cb * pow(qMax(QVector3D::dotProduct(rb, pl), 0.0), specularPower);
+
+	pl = -c.mViewPos + l;
+	pl.normalize();
+	QVector3D dc = cc * qMax(QVector3D::dotProduct(pl, nc), 0.0) * diffuse;
+	QVector3D sc = cc * pow(qMax(QVector3D::dotProduct(rc, pl), 0.0), specularPower);
 
 	QVector3D aa = ca * ambient;
 	QVector3D ab = cb * ambient;
@@ -90,7 +101,10 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 				//int red = l1 * a.mColor.red() + l2 * b.mColor.red() + l3 * c.mColor.red();
 				//int green = l1 * a.mColor.green() + l2 * b.mColor.green() + l3 * c.mColor.green();
 				//int blue = l1 * a.mColor.blue() + l2 * b.mColor.blue() + l3 * c.mColor.blue();
-				QVector3D color = ((da + aa) * l1 + (db + ab) * l2 + (dc + ac) * l3) * 255;
+				QVector3D color = ((da + aa + sa) * l1 + (db + ab + sb) * l2 + (dc + ac + sc) * l3) * 255;
+				color.setX(qBound(0.0, color.x(), 255.0));
+				color.setY(qBound(0.0, color.y(), 255.0));
+				color.setZ(qBound(0.0, color.z(), 255.0));
 				mColorBuffer.setPixel(pos, qRgb(color.x(), color.y(), color.z()));
 				mDepthBuffer[idx] = d;
 				n /= 2;
