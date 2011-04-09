@@ -78,9 +78,9 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 	QVector3D ac = cc * ambient;
 
 	const int minx = qMax((int)(qMin(x1, qMin(x2, x3))), 0);
-	const int maxx = qMin((int)(qMax(x1, qMax(x2, x3))), mColorBuffer.width());
+	const int maxx = qMin((int)(qMax(x1, qMax(x2, x3)) + 1), mColorBuffer.width());
 	const int miny = qMax((int)(qMin(y1, qMin(y2, y3))), 0);
-	const int maxy = qMin((int)(qMax(y1, qMax(y2, y3))), mColorBuffer.height());
+	const int maxy = qMin((int)(qMax(y1, qMax(y2, y3)) + 1), mColorBuffer.height());
 
 	for (int y = miny; y < maxy; y++) {
 		for (int x = minx; x < maxx; x++) {
