@@ -2,6 +2,7 @@
 #include "vertexprocessor.h"
 #include "box.h"
 #include "rasterizerinterface.h"
+#include "sphere.h"
 
 #include <QtGlobal>
 #include <QScriptEngine>
@@ -51,6 +52,19 @@ QScriptValue Box_ctor(QScriptContext *context, QScriptEngine *engine)
 	return engine->toScriptValue(box);
 }
 
+QScriptValue Sphere_ctor(QScriptContext *context, QScriptEngine *engine)
+{
+	Sphere *sphere;
+	if (context->argumentCount() != 3) {
+		context->throwError(QScriptContext::SyntaxError, "Sphere constructor takes 3 parameters: horizontal, vertical, RasterizerInterface *");
+	}
+	if (!context->argument(0).isNumber() || !context->argument(1).isNumber() || qobject_cast<RasterizerInterface *>(context->argument(2).toQObject()) == NULL) {
+		context->throwError(QScriptContext::SyntaxError, "Invalid parameter");
+	}
+	sphere = new Sphere(context->argument(0).toNumber(), context->argument(1).toNumber(), qobject_cast<RasterizerInterface *>(context->argument(2).toQObject()));
+	return engine->toScriptValue(sphere);
+}
+
 QScriptValue vertexProcessorToScriptValue(QScriptEngine *engine, VertexProcessor *const &in)
 {
 	return engine->newQObject(in);
@@ -69,4 +83,14 @@ QScriptValue boxToScriptValue(QScriptEngine *engine, Box *const &in)
 void boxFromScriptValue(const QScriptValue &object, Box *&out)
 {
 	out = qobject_cast<Box*>(object.toQObject());
+}
+
+QScriptValue sphereToScriptValue(QScriptEngine *engine, Sphere *const &in)
+{
+	return engine->newQObject(in);
+}
+
+void sphereFromScriptValue(const QScriptValue &object, Sphere *&out)
+{
+	out = qobject_cast<Sphere*>(object.toQObject());
 }

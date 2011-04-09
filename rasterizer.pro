@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     colorvertex.cpp \
     qscriptctors.cpp \
     vertexprocessor.cpp \
-    box.cpp
+    box.cpp \
+    sphere.cpp
 
 HEADERS  += mainwindow.h \
     rasterizerinterface.h \
@@ -25,6 +26,7 @@ HEADERS  += mainwindow.h \
     colorvertex.h \
     qscriptctors.h \
     vertexprocessor.h \
-    box.h
+    box.h \
+    sphere.h
 
 FORMS    += mainwindow.ui

@@ -22,8 +22,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	mEngine.globalObject().setProperty("QColor", mEngine.newFunction(QColor_ctor));
 	mEngine.globalObject().setProperty("QVector3D", mEngine.newFunction(QVector3D_ctor));
 	mEngine.globalObject().setProperty("Box", mEngine.newFunction(Box_ctor));
+	mEngine.globalObject().setProperty("Sphere", mEngine.newFunction(Sphere_ctor));
 	qScriptRegisterMetaType(&mEngine, vertexProcessorToScriptValue, vertexProcessorFromScriptValue);
 	qScriptRegisterMetaType(&mEngine, boxToScriptValue, boxFromScriptValue);
+	qScriptRegisterMetaType(&mEngine, sphereToScriptValue, sphereFromScriptValue);
 
 	mRaster->setVertexProcessor(new VertexProcessor(this));
 
