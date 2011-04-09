@@ -3,6 +3,7 @@
 #include "box.h"
 #include "rasterizerinterface.h"
 #include "sphere.h"
+#include "cylinder.h"
 
 #include <QtGlobal>
 #include <QScriptEngine>
@@ -65,6 +66,19 @@ QScriptValue Sphere_ctor(QScriptContext *context, QScriptEngine *engine)
 	return engine->toScriptValue(sphere);
 }
 
+QScriptValue Cylinder_ctor(QScriptContext *context, QScriptEngine *engine)
+{
+	Cylinder *cylinder;
+	if (context->argumentCount() != 2) {
+		context->throwError(QScriptContext::SyntaxError, "Cylinder constructor takes 2 parameters: segments, RasterizerInterface *");
+	}
+	if (!context->argument(0).isNumber() || qobject_cast<RasterizerInterface *>(context->argument(1).toQObject()) == NULL) {
+		context->throwError(QScriptContext::SyntaxError, "Invalid parameter");
+	}
+	cylinder = new Cylinder(context->argument(0).toNumber(), qobject_cast<RasterizerInterface *>(context->argument(1).toQObject()));
+	return engine->toScriptValue(cylinder);
+}
+
 QScriptValue vertexProcessorToScriptValue(QScriptEngine *engine, VertexProcessor *const &in)
 {
 	return engine->newQObject(in);
@@ -93,4 +107,14 @@ QScriptValue sphereToScriptValue(QScriptEngine *engine, Sphere *const &in)
 void sphereFromScriptValue(const QScriptValue &object, Sphere *&out)
 {
 	out = qobject_cast<Sphere*>(object.toQObject());
+}
+
+QScriptValue cylinderToScriptValue(QScriptEngine *engine, Cylinder *const &in)
+{
+	return engine->newQObject(in);
+}
+
+void cylinderFromScriptValue(const QScriptValue &object, Cylinder *&out)
+{
+	out = qobject_cast<Cylinder*>(object.toQObject());
 }

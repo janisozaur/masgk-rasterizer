@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     qscriptctors.cpp \
     vertexprocessor.cpp \
     box.cpp \
-    sphere.cpp
+    sphere.cpp \
+    cylinder.cpp
 
 HEADERS  += mainwindow.h \
     rasterizerinterface.h \
@@ -27,6 +28,7 @@ HEADERS  += mainwindow.h \
     qscriptctors.h \
     vertexprocessor.h \
     box.h \
-    sphere.h
+    sphere.h \
+    cylinder.h
 
 FORMS    += mainwindow.ui
