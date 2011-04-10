@@ -11,7 +11,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
-	ui(new Ui::MainWindow)
+	ui(new Ui::MainWindow),
+	mTimerId(-1)
 {
 	ui->setupUi(this);
 	connect(ui->execPushButton, SIGNAL(clicked()), this, SLOT(executeScript()));
@@ -83,5 +84,29 @@ void MainWindow::on_savePushButton_clicked()
 	const QPixmap *p = ui->outputDisplayLabel->pixmap();
 	if (p != NULL) {
 		p->save("out.png");
+	}
+}
+
+void MainWindow::on_startPushButton_clicked()
+{
+	mTimerId = startTimer(ui->intervalSlider->value());
+	ui->startPushButton->setEnabled(false);
+	ui->stopPushButton->setEnabled(true);
+	ui->intervalSlider->setEnabled(false);
+}
+
+void MainWindow::on_stopPushButton_clicked()
+{
+	killTimer(mTimerId);
+	mTimerId = -1;
+	ui->startPushButton->setEnabled(true);
+	ui->stopPushButton->setEnabled(false);
+	ui->intervalSlider->setEnabled(true);
+}
+
+void MainWindow::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == mTimerId) {
+		executeScript();
 	}
 }

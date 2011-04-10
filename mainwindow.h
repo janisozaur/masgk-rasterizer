@@ -27,10 +27,18 @@ public slots:
 private slots:
 	void on_savePushButton_clicked();
 
+	void on_startPushButton_clicked();
+
+	void on_stopPushButton_clicked();
+
 private:
 	Ui::MainWindow *ui;
 	RasterizerInterface *mRaster;
 	QScriptEngine mEngine;
+	int mTimerId;
+
+protected:
+	virtual void timerEvent(QTimerEvent *event);
 };
 
 #endif // MAINWINDOW_H
