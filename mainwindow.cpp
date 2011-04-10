@@ -5,6 +5,7 @@
 #include "colorvertex.h"
 #include "vertexprocessor.h"
 
+#include <QTime>
 #include <QPixmap>
 
 #include <QDebug>
@@ -68,7 +69,12 @@ void MainWindow::renderNormal()
 
 void MainWindow::executeScript()
 {
-	QScriptValue res = mEngine.evaluate(ui->scriptTextEdit->toPlainText());
+	QString script(ui->scriptTextEdit->toPlainText());
+	QTime time;
+	time.start();
+	QScriptValue res = mEngine.evaluate(script);
+	int taken = time.elapsed();
+	qDebug() << "time taken:" << taken;
 	if (res.isValid() && !res.isUndefined()) {
 		qDebug() << res.toString();
 	}
