@@ -4,15 +4,15 @@
 #include <QMetaType>
 #include <QColor>
 #include <QVector3D>
+#include "box.h"
+#include "sphere.h"
+#include "cylinder.h"
 
 class QScriptContext;
 class QScriptEngine;
 class QScriptValue;
 class VertexProcessor;
-class Box;
 class RasterizerInterface;
-class Sphere;
-class Cylinder;
 
 Q_DECLARE_METATYPE(QVector3D)
 Q_DECLARE_METATYPE(QColor)

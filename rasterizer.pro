@@ -6,6 +6,8 @@
 
 QT       += core gui script
 
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 TARGET = rasterizer
 TEMPLATE = app
 

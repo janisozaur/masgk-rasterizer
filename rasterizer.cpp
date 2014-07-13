@@ -60,18 +60,18 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 
 	QVector3D pl = -a.mViewPos + l;
 	pl.normalize();
-	QVector3D da = ca * qMax(QVector3D::dotProduct(pl, na), 0.0) * diffuse;
-	QVector3D sa = ca * pow(qMax(QVector3D::dotProduct(ra, pl), 0.0), specularPower);
+	QVector3D da = ca * qMax(QVector3D::dotProduct(pl, na), 0.0f) * diffuse;
+	QVector3D sa = ca * pow(qMax(QVector3D::dotProduct(ra, pl), 0.0f), specularPower);
 
 	pl = -b.mViewPos + l;
 	pl.normalize();
-	QVector3D db = cb * qMax(QVector3D::dotProduct(pl, nb), 0.0) * diffuse;
-	QVector3D sb = cb * pow(qMax(QVector3D::dotProduct(rb, pl), 0.0), specularPower);
+	QVector3D db = cb * qMax(QVector3D::dotProduct(pl, nb), 0.0f) * diffuse;
+	QVector3D sb = cb * pow(qMax(QVector3D::dotProduct(rb, pl), 0.0f), specularPower);
 
 	pl = -c.mViewPos + l;
 	pl.normalize();
-	QVector3D dc = cc * qMax(QVector3D::dotProduct(pl, nc), 0.0) * diffuse;
-	QVector3D sc = cc * pow(qMax(QVector3D::dotProduct(rc, pl), 0.0), specularPower);
+	QVector3D dc = cc * qMax(QVector3D::dotProduct(pl, nc), 0.0f) * diffuse;
+	QVector3D sc = cc * pow(qMax(QVector3D::dotProduct(rc, pl), 0.0f), specularPower);
 
 	QVector3D aa = ca * ambient;
 	QVector3D ab = cb * ambient;
@@ -98,9 +98,9 @@ void Rasterizer::triangle(ColorVertex a, ColorVertex b, ColorVertex c)
 					QVector3D n = na * l1 + nb * l2 + nc * l3;
 					n.normalize();
 					QVector3D color = ((da + aa + sa) * l1 + (db + ab + sb) * l2 + (dc + ac + sc) * l3) * 255;
-					color.setX(qBound(0.0, color.x(), 255.0));
-					color.setY(qBound(0.0, color.y(), 255.0));
-					color.setZ(qBound(0.0, color.z(), 255.0));
+					color.setX(qBound(0.0f, color.x(), 255.0f));
+					color.setY(qBound(0.0f, color.y(), 255.0f));
+					color.setZ(qBound(0.0f, color.z(), 255.0f));
 					mColorBuffer.setPixel(pos, qRgb(color.x(), color.y(), color.z()));
 					mDepthBuffer[idx] = d;
 					n /= 2;
